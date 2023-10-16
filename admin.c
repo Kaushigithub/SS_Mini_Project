@@ -85,7 +85,7 @@ void viewStudentDetails(int client_socket)
     int seekdata = lseek(file,offset,SEEK_SET);
     int dread = read(file,&sd,sizeof(struct StudentDetail));
     char temp[10*sizeof(struct StudentDetail)];
-    sprintf(temp,"\nStudent id: %d \nName: %s\nAge: %d\nEmail: %s\nAddress: %s\n",sd.id,sd.name,sd.age,sd.email,sd.address);
+    sprintf(temp,"\nStudent id: %d \nName: %s\nAge: %d\nEmail: %s\nAddress: %s\nStudent Activity Status: %d\n",sd.id,sd.name,sd.age,sd.email,sd.address,sd.isactive);
 
     send(client_socket,&temp,strlen(temp),0);
     close(file);
@@ -339,5 +339,77 @@ void modify_faculty_details(int client_socket)
 
 void activate_student(int client_socket)
 {
-    
+    char student_id_str[10];
+    int student_id;
+
+    // Prompt the admin to enter the student's ID
+    char prompt[] = "Enter the ID of the student to activate: ";
+    send(client_socket, prompt, strlen(prompt), 0);
+    recv(client_socket, student_id_str, sizeof(student_id_str), 0);
+    student_id = atoi(student_id_str);
+
+    // Open the student data file (Student.txt) for reading and writing
+    int student_file = open("Student.txt", O_RDWR);
+    // if (student_file == -1)
+    // {
+    //     char error_msg[] = "Error opening the student data file.";
+    //     send(client_socket, error_msg, sizeof(error_msg), 0);
+    //     close(student_file);
+    //     return;
+    // }
+
+    // Calculate the offset to the student's data
+    int offset = (student_id - 1) * sizeof(struct StudentDetail);
+
+    // Seek to the student's data in the file
+    int seek_result = lseek(student_file, offset, SEEK_SET);
+
+    // if (seek_result == -1)
+    // {
+    //     char error_msg[] = "Error seeking to student data.";
+    //     send(client_socket, error_msg, sizeof(error_msg), 0);
+    //     close(student_file);
+    //     return;
+    // }
+
+    // Read the student's data
+    struct StudentDetail student;
+    int read_result = read(student_file, &student, sizeof(struct StudentDetail));
+
+    // if (read_result == -1)
+    // {
+    //     char error_msg[] = "Error reading student data.";
+    //     send(client_socket, error_msg, sizeof(error_msg), 0);
+    //     close(student_file);
+    //     return;
+    // }
+
+    // Activate the student
+    student.isactive = 1;
+
+    // Seek back to the student's data and write the updated information
+    int write_result = lseek(student_file, offset, SEEK_SET);
+    // if (write_result == -1)
+    // {
+    //     char error_msg[] = "Error seeking to student data for writing.";
+    //     send(client_socket, error_msg, sizeof(error_msg), 0);
+    //     close(student_file);
+    //     return;
+    // }
+
+    int write_result2 = write(student_file, &student, sizeof(struct StudentDetail));
+    // if (write_result2 == -1)
+    // {
+    //     char error_msg[] = "Error writing student data.";
+    //     send(client_socket, error_msg, sizeof(error_msg), 0);
+    //     close(student_file);
+    //     return;
+    // }
+
+    // Close the student data file
+    close(student_file);
+
+    // Send a success message to the admin
+    char success_msg[] = "Student activated successfully.";
+    send(client_socket, success_msg, sizeof(success_msg), 0);
 }
