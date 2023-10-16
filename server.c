@@ -13,9 +13,7 @@
 void handle_client(int client_socket) {
 
     char string[20];
-    char buff[] = "----------Welcome to Academia ----------\n"
-    "Choose login type \n"
-    "1. Admin\t 2. Faculty\t 3. Student\n";
+    char buff[] = "----------Welcome to Academia Portal----------\nChoose login type \n1. Admin\t 2. Faculty\t 3. Student\n";
 
     //sending menu to client
     int bytesSend = send(client_socket,&buff,sizeof(buff),0);
@@ -50,6 +48,10 @@ void handle_client(int client_socket) {
             if(student_choice=='4')
             {
                 viewFacultyDetails(client_socket);
+            }
+            if(student_choice=='5')
+            {
+                activate_student(client_socket);
             }
             if(student_choice=='7')
             {
@@ -88,11 +90,11 @@ void handle_client(int client_socket) {
 
         if(valid==1)
         {
-            char result[]="login successfull....welcome faculty\n";
+            char result[]="Login done successfully....Welcome faculty....\n";
             send(client_socket,result,strlen(result),0);
 
             //if login is successfull send faculty menu
-            char menu_faculty[] = "Choose from the following options\n 1) Add Student \n 2) View Student Details \n 3) Add Faculty\n 4) View Faculty Details\n 5) Activate Student\n 6) Block Student\n 7) Modify Student Details\n 8) Modify Faculty Details\n 9) Logout and Exit\n ";
+            char menu_faculty[] = "Choose from the following options\n 1) View Offering Courses\n 2) Add New Course\n 3) Remove Course From Catalog\n 4) Update Course Details\n 5) Change Password\n 6) Logout And Exit\n ";
             send(client_socket,menu_faculty,strlen(menu_faculty),0);
             
             while(1)
@@ -121,6 +123,10 @@ void handle_client(int client_socket) {
 
                     delete_course_from_catalog(client_socket,c_id);
                 }   
+                if(faculty_choice=='4')
+                {
+                    modify_course_details(client_socket);
+                }
                 if(faculty_choice=='5')
                 {
                     //asking password of user
