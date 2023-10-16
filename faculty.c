@@ -146,6 +146,82 @@ void delete_course_from_catalog(int client_socket,int id)
     rename("temp.txt", "course.txt");
 }
 
+void modify_course_details(int client_socket)
+{
+    int file = open("course.txt", O_RDWR);
+    if (file == -1) {
+        perror("Error in opening the file.");
+    }
+    struct CourseDetail detail;
+    char course_buff[30];
+    memset(&course_buff,0,sizeof(course_buff));
+    char txt1[]="Enter course id:";
+    send(client_socket,txt1,strlen(txt1),0);
+    recv(client_socket,&course_buff,sizeof(course_buff),0);
+    int course_id=atoi(course_buff);
+    printf("Received id:%d\n",course_id);
+    
+    //set the cursor to the end of the previous record
+    int offset=(course_id-1)*sizeof(struct CourseDetail);
+    lseek(file,offset,SEEK_SET);
+    //read the structure
+    read(file,&detail,sizeof(struct CourseDetail));
+    printf("id=%d\n",detail.id);
+    printf("name=%s\n",detail.course_name);
+    printf("department=%s\n",detail.dept);
+    printf("seats=%d\n",detail.no_seats);
+    printf("credit=%d\n",detail.course_credits);
+    printf("faculty id=%d\n",detail.fac_id);
+
+    char course_field[30];
+    memset(&course_field,0,sizeof(course_field));
+    char txt2[]="Enter field:";
+    send(client_socket,txt2,strlen(txt2),0);
+    recv(client_socket,&course_field,sizeof(course_field),0);
+    printf("Received field:%s\n",course_field);
+    
+    char course_value[30];
+    memset(&course_value,0,sizeof(course_value));
+    char txt3[]="Enter value:";
+    send(client_socket,txt3,strlen(txt3),0);
+    recv(client_socket,&course_value,sizeof(course_value),0);
+    printf("Received value:%s\n",course_value);
+    
+    //compare each value with field
+    if(strcmp(course_field,"name")==0)
+    {
+        memset(&detail.course_name,0,sizeof(detail.course_name));
+        memcpy(&detail.course_name,&course_value,strlen(course_value));
+    }
+    else if(strcmp(course_field,"seat")==0)
+    {
+        detail.no_seats=atoi(course_value);
+    }
+    else if(strcmp(course_field,"credit")==0)
+    {
+        detail.course_credits=atoi(course_value);
+    }
+    else if(strcmp(course_field,"department")==0)
+    {
+        memset(&detail.dept,0,sizeof(detail.dept));
+        memcpy(&detail.dept,&course_value,strlen(course_value));
+    }
+    printf("id=%d\n",detail.id);
+    printf("name=%s\n",detail.course_name);
+    printf("department=%s\n",detail.dept);
+    printf("seats=%d\n",detail.no_seats);
+    printf("credit=%d\n",detail.course_credits);
+    printf("faculty id=%d\n",detail.fac_id);
+    
+    //write the data to the file
+    lseek(file,offset,SEEK_SET);
+    write(file,&detail,sizeof(struct CourseDetail));
+    
+    char course_send[]="Course Details modified successfully.\n";
+    send(client_socket,course_send,sizeof(course_send),0);
+    close(file);
+    
+}
 
 void change_password(int client_socket,int id,char* password)
 {
