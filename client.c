@@ -55,7 +55,7 @@ int main()
         printf("Enter your choice admin: ");
         scanf(" %c", &choice_admin);
         send(client_socket, &choice_admin, sizeof(choice_admin), 0);
-        if(choice_admin=='q') break;
+        if(choice_admin=='9') break;
         //add student
         if(choice_admin=='1')
         {
@@ -349,6 +349,35 @@ int main()
                 int sendId;
                 scanf("%d",&sendId);
                 send(client_socket,&sendId,sizeof(sendId),0);
+            }
+            if(choice_faculty=='4')
+            {
+
+                char get_id[30],set_id[30];
+                memset(get_id,0,sizeof(get_id));
+                recv(client_socket,get_id,sizeof(get_id),0);
+                printf("%s",get_id);
+                scanf("%s",set_id);
+                send(client_socket,set_id,sizeof(sizeof(set_id)),0);
+
+                char get_field[30],set_field[30];
+                memset(get_field,0,sizeof(get_field));
+                recv(client_socket,get_field,sizeof(get_field),0);
+                printf("%s",get_field);
+                scanf("%s",set_field);
+                send(client_socket,set_field,sizeof(set_field),0);
+
+                char get_value[30],set_value[30];
+                memset(get_value,0,sizeof(get_value));
+                recv(client_socket,get_value,sizeof(get_value),0);
+                printf("%s",get_value);
+                scanf("%s",set_value);
+                send(client_socket,set_value,sizeof(set_value),0);
+
+                char gotit[40];
+                memset(gotit,0,sizeof(gotit));
+                recv(client_socket,&gotit,sizeof(gotit),0);
+                printf("%s",gotit);
             }
             if(choice_faculty=='5')
             {
