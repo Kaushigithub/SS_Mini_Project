@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <stdbool.h>
-// #include "structures.c"
+#include "structures.c"
 bool login_faculty(int client_socket,int id,char* password)
 {
     printf("%d",id);
@@ -245,3 +245,7 @@ void change_password(int client_socket,int id,char* password)
         }   
     }
 }
+
+
+
+
