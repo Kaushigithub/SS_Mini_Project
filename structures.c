@@ -7,6 +7,7 @@ struct StudentDetail
     int age;
     char email[50];
     char address[50];
+    int isactive;
 };
 
 struct FacultyDetail
