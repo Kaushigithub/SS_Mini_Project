@@ -350,13 +350,6 @@ void activate_student(int client_socket)
 
     // Open the student data file (Student.txt) for reading and writing
     int student_file = open("Student.txt", O_RDWR);
-    // if (student_file == -1)
-    // {
-    //     char error_msg[] = "Error opening the student data file.";
-    //     send(client_socket, error_msg, sizeof(error_msg), 0);
-    //     close(student_file);
-    //     return;
-    // }
 
     // Calculate the offset to the student's data
     int offset = (student_id - 1) * sizeof(struct StudentDetail);
@@ -364,52 +357,62 @@ void activate_student(int client_socket)
     // Seek to the student's data in the file
     int seek_result = lseek(student_file, offset, SEEK_SET);
 
-    // if (seek_result == -1)
-    // {
-    //     char error_msg[] = "Error seeking to student data.";
-    //     send(client_socket, error_msg, sizeof(error_msg), 0);
-    //     close(student_file);
-    //     return;
-    // }
-
     // Read the student's data
     struct StudentDetail student;
     int read_result = read(student_file, &student, sizeof(struct StudentDetail));
-
-    // if (read_result == -1)
-    // {
-    //     char error_msg[] = "Error reading student data.";
-    //     send(client_socket, error_msg, sizeof(error_msg), 0);
-    //     close(student_file);
-    //     return;
-    // }
 
     // Activate the student
     student.isactive = 1;
 
     // Seek back to the student's data and write the updated information
     int write_result = lseek(student_file, offset, SEEK_SET);
-    // if (write_result == -1)
-    // {
-    //     char error_msg[] = "Error seeking to student data for writing.";
-    //     send(client_socket, error_msg, sizeof(error_msg), 0);
-    //     close(student_file);
-    //     return;
-    // }
 
     int write_result2 = write(student_file, &student, sizeof(struct StudentDetail));
-    // if (write_result2 == -1)
-    // {
-    //     char error_msg[] = "Error writing student data.";
-    //     send(client_socket, error_msg, sizeof(error_msg), 0);
-    //     close(student_file);
-    //     return;
-    // }
 
     // Close the student data file
     close(student_file);
 
     // Send a success message to the admin
     char success_msg[] = "Student activated successfully.";
+    send(client_socket, success_msg, sizeof(success_msg), 0);
+}
+
+void block_student(int client_socket)
+{
+    char student_id_str1[10];
+    int student_id1;
+
+    // Prompt the admin to enter the student's ID
+    char prompt1[] = "Enter the ID of the student to activate: ";
+    send(client_socket, prompt1, strlen(prompt1), 0);
+    recv(client_socket, student_id_str1, sizeof(student_id_str1), 0);
+    student_id1 = atoi(student_id_str1);
+
+    // Open the student data file (Student.txt) for reading and writing
+    int student_file = open("Student.txt", O_RDWR);
+
+    // Calculate the offset to the student's data
+    int offset = (student_id1 - 1) * sizeof(struct StudentDetail);
+
+    // Seek to the student's data in the file
+    int seek_result = lseek(student_file, offset, SEEK_SET);
+
+    // Read the student's data
+    struct StudentDetail student;
+    int read_result = read(student_file, &student, sizeof(struct StudentDetail));
+
+    // Activate the student
+    student.isactive = 0;
+
+    // Seek back to the student's data and write the updated information
+    int write_result = lseek(student_file, offset, SEEK_SET);
+
+    int write_result2 = write(student_file, &student, sizeof(struct StudentDetail));
+
+    // Close the student data file
+    close(student_file);
+
+    // Send a success message to the admin
+    char success_msg[] = "Student blocked successfully.";
     send(client_socket, success_msg, sizeof(success_msg), 0);
 }
