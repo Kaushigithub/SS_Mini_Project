@@ -186,6 +186,21 @@ int main()
             recv(client_socket,s_response,sizeof(s_response),0);
             printf("%s",s_response);
         }
+        if(choice_admin=='6')
+        {
+            char get_sid1[50];
+            memset(get_sid1,0,sizeof(get_sid1));
+            recv(client_socket,get_sid1,sizeof(get_sid1),0);
+            printf("%s",get_sid1);
+            memset(get_sid1,0,sizeof(get_sid1));
+            scanf("%s",get_sid1);
+            send(client_socket,get_sid1,sizeof(get_sid1),0);
+            memset(get_sid1,0,sizeof(get_sid1));
+            char s_response1[400];
+            memset(s_response1,0,sizeof(s_response1));
+            recv(client_socket,s_response1,sizeof(s_response1),0);
+            printf("%s",s_response1);
+        }
         if(choice_admin=='7')
         {
 
