@@ -53,6 +53,10 @@ void handle_client(int client_socket) {
             {
                 activate_student(client_socket);
             }
+            if(student_choice=='6')
+            {
+                block_student(client_socket);
+            }
             if(student_choice=='7')
             {
                 modify_student_details(client_socket);
