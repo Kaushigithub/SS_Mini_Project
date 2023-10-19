@@ -305,6 +305,7 @@ int main()
        if(valid==1)
        {
         char result[37];
+        memset(result,0,sizeof(result));
         recv(client_socket,&result,sizeof(result),0);
         printf("%s",result);
         
@@ -315,6 +316,7 @@ int main()
         while(1)
         {
             printf("%s",server_response_faculty);
+
             //taking choice from that admin menu
             char choice_faculty;
             printf("Enter your choice faculty: ");
@@ -343,7 +345,7 @@ int main()
             if(choice_faculty=='2')
             {
             
-            char buffer[512],fac_ques[30];
+                char buffer[512],fac_ques[30];
                 memset(&fac_ques,0,sizeof(fac_ques));
                 recv(client_socket,&fac_ques,sizeof(fac_ques),0);
                 printf("%s",fac_ques);
@@ -355,7 +357,6 @@ int main()
                 recv(client_socket,&fac_ques,sizeof(fac_ques),0);
                 printf("%s",fac_ques);
                 memset(fac_ques,0,sizeof(fac_ques));
-                // getchar();
                 scanf("%s",fac_ques);
                 send(client_socket,fac_ques,sizeof(fac_ques),0);
                 memset(&fac_ques,0,sizeof(fac_ques));
@@ -375,6 +376,7 @@ int main()
                 memset(&fac_ques,0,sizeof(fac_ques));
 
                 char fac_rec_msg[512];
+                memset(fac_ques,0,sizeof(fac_ques));
                 recv(client_socket, &fac_rec_msg, sizeof(fac_rec_msg), 0);
                 printf("%s\n", fac_rec_msg);
             }
@@ -382,6 +384,7 @@ int main()
             if(choice_faculty=='3')
             {
                 char delete_propmt[40];
+                memset(delete_propmt,0,sizeof(delete_propmt));
                 recv(client_socket,&delete_propmt,sizeof(delete_propmt),0);
                 printf("%s",delete_propmt);
 
