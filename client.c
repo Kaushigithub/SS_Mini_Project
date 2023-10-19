@@ -5,8 +5,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include "structures.c"
-// #include "faculty.c"
-// #include "course.c"
+
 int main() 
 {
     int client_socket;
@@ -33,7 +32,7 @@ int main()
     int writedata = write(1,buf,recvdata);
     
     //taking user choice to login as
-    char choiceprompt[] ="Enter your choice : ";
+    char choiceprompt[] ="\nEnter your choice : ";
     writedata = write(1,choiceprompt,sizeof(choiceprompt));
 
     char readchoice;
@@ -52,7 +51,7 @@ int main()
         printf("%s",server_response_admin);
     
         char choice_admin;
-        printf("Enter your choice admin: ");
+        printf("\nEnter your choice admin: ");
         scanf(" %c", &choice_admin);
         send(client_socket, &choice_admin, sizeof(choice_admin), 0);
         if(choice_admin=='9') break;
@@ -119,9 +118,11 @@ int main()
             // struct StudentDetail newStudent;
             char buffer1[512],ques1[30];
             memset(ques1,0,sizeof(ques1));
+
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
+
             scanf("%s",ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
@@ -129,7 +130,7 @@ int main()
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            // getchar();
+            
             scanf("%s",ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
@@ -137,7 +138,7 @@ int main()
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            // getchar();
+            
             scanf("%s",ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
@@ -145,7 +146,15 @@ int main()
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            // getchar();
+            
+            scanf("%s",ques1);
+            send(client_socket,ques1,sizeof(ques1),0);
+            memset(ques1,0,sizeof(ques1));
+
+            recv(client_socket,ques1,sizeof(ques1),0);
+            printf("%s",ques1);
+            memset(ques1,0,sizeof(ques1));
+            
             scanf("%s",ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
@@ -270,7 +279,8 @@ int main()
         char login_prompt[30];
         memset(&login_prompt,0,sizeof(login_prompt));
         char send_login_id[30];
-        char password_prompt[30];
+        char password_prompt1[30];
+        memset(&password_prompt1,0,sizeof(password_prompt1));
         char send_password[30];
 
         //recieving login prompt
@@ -282,8 +292,8 @@ int main()
         send(client_socket,send_login_id,sizeof(send_login_id),0);
 
         //recieving password prompt
-        recv(client_socket,&password_prompt,sizeof(password_prompt),0);
-        printf("%s",password_prompt);
+        recv(client_socket,&password_prompt1,sizeof(password_prompt1),0);
+        printf("%s",password_prompt1);
 
         //sending password
         scanf("%s",send_password);
@@ -322,11 +332,11 @@ int main()
                 if(ack==0)break;
                 struct CourseDetail course;
                 recv(client_socket,&course,sizeof(course),0);
-                printf("Course Id=%d\n",course.id);
-                printf("Course Name=%s\n",course.course_name);
-                printf("Department offering course=%s\n",course.dept);
-                printf("Number of Seats=%d\n",course.no_seats);
-                printf("course credit=%d\n",course.course_credits);
+                printf("Course Id: %d\n",course.id);
+                printf("Course Name: %s\n",course.course_name);
+                printf("Department offering course: %s\n",course.dept);
+                printf("Number of Seats: %d\n",course.no_seats);
+                printf("Course credit: %d\n",course.course_credits);
                 }    
             }
             //add course
@@ -436,6 +446,141 @@ int main()
         printf("%s",result);
        }
    }
+
+   if(readchoice=='3')
+    {
+        //student module
+        char login_prompt[30];
+        memset(&login_prompt,0,sizeof(login_prompt));
+        char send_login_id[30];
+        char password_prompt[30];
+        memset(&password_prompt,0,sizeof(password_prompt));
+        char send_password[30];
+
+        //recieving login prompt
+        recv(client_socket,&login_prompt,sizeof(login_prompt),0);
+        printf("%s",login_prompt);
+  
+        //sending login id
+        scanf("%s",send_login_id);
+        send(client_socket,send_login_id,sizeof(send_login_id),0);
+
+        //recieving password prompt
+        recv(client_socket,&password_prompt,sizeof(password_prompt),0);
+        printf("%s",password_prompt);
+
+        //sending password
+        scanf("%s",send_password);
+        send(client_socket,send_password,sizeof(send_password),0);
+
+       //recieving valid value
+       int valid;
+       recv(client_socket,&valid,sizeof(valid),0);
+       if(valid==1)
+       {
+        char result[35];
+        recv(client_socket,&result,sizeof(result),0);
+        printf("%s",result);
+        
+        //if login is successfull recieve student menu
+        char server_response_student[512];
+        memset(server_response_student,0,512*sizeof(char));
+        recv(client_socket, &server_response_student, sizeof(server_response_student),0);
+
+        while(1)
+        {
+        printf("%s",server_response_student);
+
+        //take choice of function to execute
+        int choice;
+        printf("Enter your choice: ");
+        scanf("%d",&choice);
+        send(client_socket,&choice,sizeof(choice),0);
+        if(choice==1)
+        {
+            int ack;
+            while(1)
+            {
+              recv(client_socket,&ack,sizeof(ack),0);
+              if(ack==0)break;
+              struct CourseDetail course;
+              recv(client_socket,&course,sizeof(course),0);
+              printf("Course id: %d\n",course.id);
+              printf("Course Name: %s\n",course.course_name);
+              printf("Department offering course: %s\n",course.dept);
+              printf("Number of Seats: %d\n",course.no_seats);
+              printf("Course credit: %d\n",course.course_credits);
+            }    
+        }
+        if(choice==2)
+        {
+            //recieve choice of course
+            char course_id_prompt[40];
+            recv(client_socket,&course_id_prompt,sizeof(course_id_prompt),0);
+            printf("%s",course_id_prompt);
+
+            //send courseid
+            int course_id;
+            scanf("%d",&course_id);
+            send(client_socket,&course_id,sizeof(course_id),0); 
+
+            char buff[30];
+            recv(client_socket,&buff,sizeof(buff),0);
+            printf("%s",buff);
+        }
+        if(choice==3)
+        {
+            //recieving course id prompt
+            char denroll[45];
+            recv(client_socket,&denroll,sizeof(denroll),0);
+            printf("%s",denroll);
+
+            //taking user choice for course id
+            int course_id;
+            scanf("%d",&course_id);
+            send(client_socket,&course_id,sizeof(course_id),0);
+        }
+        if(choice==4)
+        {
+            int stu_ack;
+            while(1)
+            {
+              recv(client_socket,&stu_ack,sizeof(stu_ack),0);
+              if(stu_ack==0)break;
+              struct EnrolledCourse stu_course;
+              recv(client_socket,&stu_course,sizeof(stu_course),0);
+              printf("Course id: %d\n",stu_course.course_id);
+              printf("Course Name: %s\n",stu_course.course_name);
+              printf("Student id: %d\n",stu_course.student_id);
+              printf("Faculty id: %d\n",stu_course.fac_id);        
+            }    
+        }
+        if(choice==5)
+        {
+            //recieving password prompt
+            char recv_pasword_s[30];
+            recv(client_socket,&recv_pasword_s,sizeof(recv_pasword_s),0);
+            printf("%s",recv_pasword_s);
+
+            //sending password of user
+            char password_s[20];
+            scanf("%s",password_s);
+            send(client_socket,password_s,sizeof(password_s),0);
+
+            char result_s[30];
+            recv(client_socket,&result_s,sizeof(result_s),0);
+            printf("%s",result_s);
+        }
+        if(choice==6) break;
+        }
+     }
+       else
+       {
+        char result[32];
+        recv(client_socket,&result,sizeof(result),0);
+        printf("%s",result);
+       }
+    }  
     close(client_socket);
     return 0;
 }
