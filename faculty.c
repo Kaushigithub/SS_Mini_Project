@@ -99,7 +99,6 @@ void add_course(int client_socket, int id) {
 
 void view_course(int client_socket,int id)
 {
-    //printf("hi\n");
     int fd=open("course.txt",O_RDWR);
     if(fd==-1)
     {
@@ -107,13 +106,11 @@ void view_course(int client_socket,int id)
     }
     struct CourseDetail course;
     int ack=1;
-    printf("after 1\n");
     while(read(fd,&course,sizeof(course)))
     {
         if(course.fac_id==id)
         {
-            printf("inside loop\n");
-            ack=1;
+
             send(client_socket,&ack,sizeof(ack),0);
             send(client_socket,&course,sizeof(course),0);
 
@@ -193,11 +190,11 @@ void modify_course_details(int client_socket)
         memset(&detail.course_name,0,sizeof(detail.course_name));
         memcpy(&detail.course_name,&course_value,strlen(course_value));
     }
-    else if(strcmp(course_field,"no_seat")==0)
+    else if(strcmp(course_field,"no_seats")==0)
     {
         detail.no_seats=atoi(course_value);
     }
-    else if(strcmp(course_field,"course_credit")==0)
+    else if(strcmp(course_field,"course_credits")==0)
     {
         detail.course_credits=atoi(course_value);
     }

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "structures.c"
 #include <sys/socket.h>
 #include <fcntl.h>
 #include <string.h>
@@ -152,7 +151,7 @@ void add_faculty(int client_socket) {
     memset(&buff1,0,sizeof(buff1));
 
     char msg5[]="Enter faculty address: ";
-    send(client_socket,&msg4,strlen(msg5),0);
+    send(client_socket,&msg5,strlen(msg5),0);
     recv(client_socket,&buff1,sizeof(buff1),0);
     strcpy(faculty.address,buff1);
     memset(&buff1,0,sizeof(buff1));

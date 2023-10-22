@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include "structures.c"
 #include "admin.c"
 #include "student.c"
 #include "faculty.c"
@@ -93,7 +94,7 @@ void handle_client(int client_socket) {
 
         if(valid==1)
         {
-            char result[]="Login done successfully....Welcome faculty....\n";
+            char result[]="Login Successfully....Welcome faculty....\n";
             send(client_socket,result,strlen(result),0);
 
             //if login is successfull send faculty menu
@@ -104,6 +105,7 @@ void handle_client(int client_socket) {
             {
                 
                 char faculty_choice;
+                memset(&faculty_choice,0,sizeof(faculty_choice));
                 recv(client_socket, &faculty_choice,sizeof(faculty_choice), 0);
                 
                 if(faculty_choice=='1')
@@ -182,7 +184,7 @@ void handle_client(int client_socket) {
 
         if(valid1==1)
         {
-            char result1[]="Login done successfully....Welcome Student...\n";
+            char result1[]="Login Successfully..Welcome Student...\n";
             send(client_socket,result1,strlen(result1),0);
 
             //if login is successfull send faculty menu
@@ -261,7 +263,7 @@ int main() {
         perror("Error creating socket");
         exit(1);
     }
-
+    // setsockopt() can be used in reuse of address and port and prevents error such as "Address already in use"
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(8888);
     server_addr.sin_addr.s_addr = INADDR_ANY;

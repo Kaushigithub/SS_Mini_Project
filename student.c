@@ -1,5 +1,4 @@
 #include <stdio.h>
-// #include "structures.c"
 #include <sys/socket.h>
 #include <fcntl.h>
 #include<string.h>
@@ -51,7 +50,12 @@ void enroll_course(int client_socket,int student_id,int course_id)
       {
         if(course_enroll.student_id==student_id && course_enroll.course_id==course_id)
         {
-           if(course.no_seats>0)
+            if(course_enroll.enrolled==1)
+            {
+                flag=1;
+                break;
+            }
+           else if(course.no_seats>0)
            {
             flag=1;
             lseek(fd2,-(sizeof(struct CourseDetail)),SEEK_CUR);

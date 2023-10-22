@@ -65,30 +65,31 @@ int main()
             printf("%s",ques);
             memset(ques,0,sizeof(ques));
             scanf("%s",ques);
+            scanf("%[^/\n]", ques);
             send(client_socket,ques,sizeof(ques),0);
             memset(ques,0,sizeof(ques));
 
             recv(client_socket,ques,sizeof(ques),0);
             printf("%s",ques);
             memset(ques,0,sizeof(ques));
-            // getchar();
             scanf("%s",ques);
+            scanf("%[^/\n]", ques);
             send(client_socket,ques,sizeof(ques),0);
             memset(ques,0,sizeof(ques));
 
             recv(client_socket,ques,sizeof(ques),0);
             printf("%s",ques);
             memset(ques,0,sizeof(ques));
-            // getchar();
             scanf("%s",ques);
+            scanf("%[^/\n]", ques);
             send(client_socket,ques,sizeof(ques),0);
             memset(ques,0,sizeof(ques));
 
             recv(client_socket,ques,sizeof(ques),0);
             printf("%s",ques);
             memset(ques,0,sizeof(ques));
-            // getchar();
             scanf("%s",ques);
+            scanf("%[^/\n]", ques);
             send(client_socket,ques,sizeof(ques),0);
             memset(&ques,0,sizeof(ques));
 
@@ -106,6 +107,7 @@ int main()
 
             char sid[10];
             scanf("%s",sid);
+            scanf("%[^/\n]", sid);
             send(client_socket,sid,sizeof(sid),0);
 
             char sdata[300];
@@ -116,46 +118,46 @@ int main()
         if(choice_admin=='3')
         {
             // struct StudentDetail newStudent;
-            char buffer1[512],ques1[30];
+            char buffer1[800],ques1[30];
             memset(ques1,0,sizeof(ques1));
 
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-
             scanf("%s",ques1);
+            scanf("%[^/\n]", ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
 
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            
             scanf("%s",ques1);
+            scanf("%[^/\n]", ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
 
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            
             scanf("%s",ques1);
+            scanf("%[^/\n]", ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
 
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            
             scanf("%s",ques1);
+            scanf("%[^/\n]", ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
 
             recv(client_socket,ques1,sizeof(ques1),0);
             printf("%s",ques1);
             memset(ques1,0,sizeof(ques1));
-            
             scanf("%s",ques1);
+            scanf("%[^/\n]", ques1);
             send(client_socket,ques1,sizeof(ques1),0);
             memset(ques1,0,sizeof(ques1));
 
@@ -219,6 +221,7 @@ int main()
             recv(client_socket,get_id,sizeof(get_id),0);
             printf("%s",get_id);
             scanf("%s",set_id);
+            scanf("%[^/\n]", set_id);
             send(client_socket,set_id,sizeof(int),0);
 
             char get_field[30],set_field[30];
@@ -226,6 +229,7 @@ int main()
             recv(client_socket,get_field,sizeof(get_field),0);
             printf("%s",get_field);
             scanf("%s",set_field);
+            scanf("%[^/\n]", set_field);
             send(client_socket,set_field,sizeof(set_field),0);
 
             char get_value[30],set_value[30];
@@ -233,6 +237,7 @@ int main()
             recv(client_socket,get_value,sizeof(get_value),0);
             printf("%s",get_value);
             scanf("%s",set_value);
+            scanf("%[^/\n]", set_value);
             send(client_socket,set_value,sizeof(set_value),0);
 
             char gotit[40];
@@ -249,6 +254,7 @@ int main()
             recv(client_socket,get_id,sizeof(get_id),0);
             printf("%s",get_id);
             scanf("%s",set_id);
+            scanf("%[^/\n]", set_id);
             send(client_socket,set_id,sizeof(int),0);
 
             char get_field[30],set_field[30];
@@ -256,6 +262,7 @@ int main()
             recv(client_socket,get_field,sizeof(get_field),0);
             printf("%s",get_field);
             scanf("%s",set_field);
+            scanf("%[^/\n]", set_field);
             send(client_socket,set_field,sizeof(set_field),0);
 
             char get_value[30],set_value[30];
@@ -263,6 +270,7 @@ int main()
             recv(client_socket,get_value,sizeof(get_value),0);
             printf("%s",get_value);
             scanf("%s",set_value);
+            scanf("%[^/\n]", set_value);
             send(client_socket,set_value,sizeof(set_value),0);
 
             char gotit[40];
@@ -289,14 +297,16 @@ int main()
   
         //sending login id
         scanf("%s",send_login_id);
+        scanf("%[^/\n]", send_login_id);
         send(client_socket,send_login_id,sizeof(send_login_id),0);
 
         //recieving password prompt
         recv(client_socket,&password_prompt1,sizeof(password_prompt1),0);
         printf("%s",password_prompt1);
-
+        
         //sending password
         scanf("%s",send_password);
+        scanf("%[^/\n]", password_prompt1);
         send(client_socket,send_password,sizeof(send_password),0);
 
        //recieving valid value
@@ -308,10 +318,11 @@ int main()
         memset(result,0,sizeof(result));
         recv(client_socket,&result,sizeof(result),0);
         printf("%s",result);
+        //memset(&result,0,sizeof(result));
         
         //if login is successfull recieve faculty menu
         char server_response_faculty[512];
-        memset(server_response_faculty,0,512*sizeof(char));
+        memset(server_response_faculty,0,sizeof(server_response_faculty));
         recv(client_socket, &server_response_faculty, sizeof(server_response_faculty),0);
         while(1)
         {
@@ -330,7 +341,6 @@ int main()
                 while(1)
                 {
                 recv(client_socket,&ack,sizeof(ack),0);
-                //   printf("%d",ack);
                 if(ack==0)break;
                 struct CourseDetail course;
                 recv(client_socket,&course,sizeof(course),0);
@@ -339,6 +349,7 @@ int main()
                 printf("Department offering course: %s\n",course.dept);
                 printf("Number of Seats: %d\n",course.no_seats);
                 printf("Course credit: %d\n",course.course_credits);
+                memset(&course,0,sizeof(course));
                 }    
             }
             //add course
@@ -351,6 +362,7 @@ int main()
                 printf("%s",fac_ques);
                 memset(fac_ques,0,sizeof(fac_ques));
                 scanf("%s",fac_ques);
+                scanf("%[^/\n]", fac_ques);
                 send(client_socket,fac_ques,sizeof(fac_ques),0);
                 memset(&fac_ques,0,sizeof(fac_ques));
 
@@ -358,6 +370,7 @@ int main()
                 printf("%s",fac_ques);
                 memset(fac_ques,0,sizeof(fac_ques));
                 scanf("%s",fac_ques);
+                scanf("%[^/\n]", fac_ques);
                 send(client_socket,fac_ques,sizeof(fac_ques),0);
                 memset(&fac_ques,0,sizeof(fac_ques));
 
@@ -365,6 +378,7 @@ int main()
                 printf("%s",fac_ques);
                 memset(fac_ques,0,sizeof(fac_ques));
                 scanf("%s",fac_ques);
+                scanf("%[^/\n]", fac_ques);
                 send(client_socket,fac_ques,sizeof(fac_ques),0);
                 memset(&fac_ques,0,sizeof(fac_ques));
 
@@ -372,6 +386,7 @@ int main()
                 printf("%s",fac_ques);
                 memset(fac_ques,0,sizeof(fac_ques));
                 scanf("%s",fac_ques);
+                scanf("%[^/\n]", fac_ques);
                 send(client_socket,fac_ques,sizeof(fac_ques),0);
                 memset(&fac_ques,0,sizeof(fac_ques));
 
@@ -391,6 +406,7 @@ int main()
                 //sending id to delete
                 int sendId;
                 scanf("%d",&sendId);
+                
                 send(client_socket,&sendId,sizeof(sendId),0);
             }
             if(choice_faculty=='4')
@@ -401,6 +417,7 @@ int main()
                 recv(client_socket,get_id,sizeof(get_id),0);
                 printf("%s",get_id);
                 scanf("%s",set_id);
+                scanf("%[^/\n]", set_id);
                 send(client_socket,set_id,sizeof(sizeof(set_id)),0);
 
                 char get_field[30],set_field[30];
@@ -408,6 +425,7 @@ int main()
                 recv(client_socket,get_field,sizeof(get_field),0);
                 printf("%s",get_field);
                 scanf("%s",set_field);
+                scanf("%[^/\n]", set_field);
                 send(client_socket,set_field,sizeof(set_field),0);
 
                 char get_value[30],set_value[30];
@@ -415,6 +433,7 @@ int main()
                 recv(client_socket,get_value,sizeof(get_value),0);
                 printf("%s",get_value);
                 scanf("%s",set_value);
+                scanf("%[^/\n]", set_value);
                 send(client_socket,set_value,sizeof(set_value),0);
 
                 char gotit[40];
@@ -426,6 +445,7 @@ int main()
             {
                 //recieving password prompt
                 char recv_pasword[30];
+                memset(recv_pasword,0,sizeof(recv_pasword));
                 recv(client_socket,&recv_pasword,sizeof(recv_pasword),0);
                 printf("%s",recv_pasword);
 
@@ -445,6 +465,7 @@ int main()
        else
        {
         char result[32];
+        memset(result,0,sizeof(result));
         recv(client_socket,&result,sizeof(result),0);
         printf("%s",result);
        }
@@ -466,6 +487,7 @@ int main()
   
         //sending login id
         scanf("%s",send_login_id);
+        scanf("%[^/\n]", send_login_id);
         send(client_socket,send_login_id,sizeof(send_login_id),0);
 
         //recieving password prompt
@@ -474,6 +496,7 @@ int main()
 
         //sending password
         scanf("%s",send_password);
+        scanf("%[^/\n]", send_password);
         send(client_socket,send_password,sizeof(send_password),0);
 
        //recieving valid value
@@ -487,7 +510,7 @@ int main()
         
         //if login is successfull recieve student menu
         char server_response_student[512];
-        memset(server_response_student,0,512*sizeof(char));
+        memset(server_response_student,0,sizeof(server_response_student));
         recv(client_socket, &server_response_student, sizeof(server_response_student),0);
 
         while(1)
